@@ -64,11 +64,11 @@ jobs:
             echo "Version: $NUGET_VERSION" >> $GITHUB_STEP_SUMMARY
 
       - name: Build Library
-        run: dotnet build .\Controls.UserDialogs.Maui\Controls.UserDialogs.Maui.csproj -c Release
+        run: dotnet build ./Controls.UserDialogs.Maui/Controls.UserDialogs.Maui.csproj -c Release
 
       - name: Build Nuget
-        run: dotnet pack .\Controls.UserDialogs.Maui\Controls.UserDialogs.Maui.csproj -c Release -o pack
+        run: dotnet pack ./Controls.UserDialogs.Maui/Controls.UserDialogs.Maui.csproj -c Release -o pack
 
       - name: Upload Nuget
         run: |
-          dotnet nuget push .\pack\Controls.UserDialogs.Maui.*.nupkg --source github_cenozon
+          dotnet nuget push ./pack/Controls.UserDialogs.Maui.*.nupkg --source github_cenozon
