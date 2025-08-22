@@ -33,8 +33,7 @@ permissions:
 
 jobs:
   publish:
-    runs-on: ubuntu-latest
-    # runs-on: windows-latest
+    runs-on: windows-latest
     permissions:
       contents: write
       packages: write
@@ -53,26 +52,19 @@ jobs:
             9.0.x
 
       - name: Setup .Net Workloads
-        run: |
-          dotnet workload restore
+        run: dotnet workload restore
 
       - name: Extract Version
-        shell: pwsh
         run: |
           $version = (Select-Xml -Path '.\Controls.UserDialogs.Maui\Controls.UserDialogs.Maui.csproj' -XPath '//Version').Node.InnerText.Trim()
           "NUGET_VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-
-      - name: Version
-        run: |
-            echo "Version: $NUGET_VERSION"
-            echo "Version: $NUGET_VERSION" >> $GITHUB_STEP_SUMMARY
+          "NUGET_VERSION=$version" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Encoding utf8 -Append
 
       - name: Build Library
-        run: dotnet build ./Controls.UserDialogs.Maui/Controls.UserDialogs.Maui.csproj -c Release
+        run: dotnet build .\Controls.UserDialogs.Maui\Controls.UserDialogs.Maui.csproj -c Release
 
       - name: Build Nuget
-        run: dotnet pack ./Controls.UserDialogs.Maui/Controls.UserDialogs.Maui.csproj -c Release -o pack
+        run: dotnet pack .\Controls.UserDialogs.Maui\Controls.UserDialogs.Maui.csproj -c Release -o pack
 
       - name: Upload Nuget
-        run: |
-          dotnet nuget push ./pack/Controls.UserDialogs.Maui.*.nupkg --source github_cenozon
+        run: dotnet nuget push .\pack\Controls.UserDialogs.Maui.*.nupkg --source github_cenozon
