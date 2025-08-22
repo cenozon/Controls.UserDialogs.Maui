@@ -53,6 +53,7 @@ jobs:
             9.0.x
 
       - name: Extract Version
+        shell: pwsh
         run: |
           $version = (Select-Xml -Path '.\Controls.UserDialogs.Maui\Controls.UserDialogs.Maui.csproj' -XPath '//Version').Node.InnerText.Trim()
           "NUGET_VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
