@@ -1,4 +1,4 @@
-name: 'Packages: Controls.UserDialogs.Maui '
+name: 'Packages: Controls.UserDialogs.Maui'
 
 on:
     workflow_dispatch: {}
